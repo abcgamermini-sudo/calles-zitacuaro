@@ -1,0 +1,171 @@
+.settings-panel {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.settings-section {
+  margin-bottom: 32px;
+}
+
+.settings-section h3 {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #6b7280;
+  margin-bottom: 12px;
+}
+
+.dark-mode .settings-section h3 {
+  color: #9ca3af;
+}
+
+.settings-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  color: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 16px;
+}
+
+.dark-mode .settings-item {
+  background: #1f2937;
+  border-color: #374151;
+}
+
+.settings-item:hover:not(:disabled) {
+  background: #f9fafb;
+  transform: translateX(4px);
+}
+
+.dark-mode .settings-item:hover:not(:disabled) {
+  background: #111827;
+}
+
+.settings-item:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.settings-item svg {
+  color: #10b981;
+  flex-shrink: 0;
+}
+
+.item-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: left;
+}
+
+.item-title {
+  font-weight: 500;
+}
+
+.item-desc {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.dark-mode .item-desc {
+  color: #9ca3af;
+}
+
+.stats-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.dark-mode .stats-card {
+  background: #1f2937;
+  border-color: #374151;
+}
+
+.stat-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stat-row svg {
+  color: #10b981;
+  flex-shrink: 0;
+}
+
+.stat-row strong {
+  margin-left: auto;
+  font-size: 18px;
+}
+
+.stat-divider {
+  height: 1px;
+  background: #e5e7eb;
+  margin: 12px 0;
+}
+
+.dark-mode .stat-divider {
+  background: #374151;
+}
+
+.colonias-list {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.colonia-item {
+  display: flex;
+  gap: 8px;
+  font-size: 13px;
+  padding: 4px 0;
+}
+
+.colonia-item .rank {
+  font-weight: 600;
+  width: 20px;
+  color: #10b981;
+}
+
+.colonia-item .name {
+  flex: 1;
+}
+
+.colonia-item .count {
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.dark-mode .colonia-item .count {
+  color: #9ca3af;
+}
+
+.info-text {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  color: #6b7280;
+}
+
+.dark-mode .info-text {
+  background: #1f2937;
+  border-color: #374151;
+  color: #9ca3af;
+}
+
+.info-text p {
+  margin: 4px 0;
+  font-size: 14px;
+}
