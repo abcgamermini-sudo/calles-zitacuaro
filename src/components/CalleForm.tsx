@@ -51,17 +51,58 @@ export default function CalleForm({
     setErrors({})
   }, [calle, suggestedCodigo])
 
-  const handleExtractCoordinates = () => {
-    const coords = extractCoordinatesFromUrl(mapsUrl)
-    if (coords) {
-      setExtractedCoords(coords)
-      setUbicacion(coords)
-      setErrors({ ...errors, ubicacion: '' })
-    } else {
+  const handleExtractCoordinates = async () => {
+    if (!mapsUrl.trim()) {
       setErrors({
         ...errors,
-        ubicacion: 'No se pudieron extraer coordenadas de esta URL',
+        ubicacion: 'Por favor ingresa una URL o coordenadas',
       })
+      return
+    }
+
+    try {
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+      const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+
+      const response = await fetch(
+        `${supabaseUrl}/functions/v1/resolve-maps-url`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${anonKey}`,
+          },
+          body: JSON.stringify({ url: mapsUrl }),
+        }
+      )
+
+      if (response.ok) {
+        const data = await response.json()
+        setExtractedCoords(data.coordinates)
+        setUbicacion(data.coordinates)
+        setErrors({ ...errors, ubicacion: '' })
+      } else {
+        const errorData = await response.json()
+        setErrors({
+          ...errors,
+          ubicacion:
+            errorData.error ||
+            'No se pudieron extraer coordenadas de esta URL',
+        })
+      }
+    } catch (error) {
+      const coords = extractCoordinatesFromUrl(mapsUrl)
+      if (coords) {
+        setExtractedCoords(coords)
+        setUbicacion(coords)
+        setErrors({ ...errors, ubicacion: '' })
+      } else {
+        setErrors({
+          ...errors,
+          ubicacion:
+            'Error al procesar la URL. Intenta pegar las coordenadas directamente.',
+        })
+      }
     }
   }
 
