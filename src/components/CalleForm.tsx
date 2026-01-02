@@ -171,10 +171,18 @@ export default function CalleForm({
               <div>
                 <input
                   type="text"
-                  placeholder="Pega aquí la URL de Google Maps"
+                  placeholder="Pega aquí la URL de Google Maps (acortada o normal)"
                   value={mapsUrl}
                   onChange={(e) => setMapsUrl(e.target.value)}
                 />
+                <div className="format-hint">
+                  Acepta:
+                  <ul>
+                    <li>URLs acortadas: https://maps.app.goo.gl/...</li>
+                    <li>URLs normales: https://www.google.com/maps/...</li>
+                    <li>Coordenadas directas: 19.4253, -100.3542</li>
+                  </ul>
+                </div>
                 <button
                   className="extract-btn"
                   onClick={handleExtractCoordinates}
@@ -190,13 +198,18 @@ export default function CalleForm({
                 )}
               </div>
             ) : (
-              <input
-                type="text"
-                placeholder="19.4253, -100.3542"
-                value={ubicacion}
-                onChange={(e) => setUbicacion(e.target.value)}
-                className={errors.ubicacion ? 'error' : ''}
-              />
+              <div>
+                <input
+                  type="text"
+                  placeholder="19.4253, -100.3542"
+                  value={ubicacion}
+                  onChange={(e) => setUbicacion(e.target.value)}
+                  className={errors.ubicacion ? 'error' : ''}
+                />
+                <div className="format-hint">
+                  Formato: latitud, longitud (ej: 19.4253, -100.3542)
+                </div>
+              </div>
             )}
             {errors.ubicacion && <span className="error-text">{errors.ubicacion}</span>}
           </div>

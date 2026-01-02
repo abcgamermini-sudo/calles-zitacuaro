@@ -1,24 +1,38 @@
 export function extractCoordinatesFromUrl(url: string): string | null {
-  if (!url || !url.trim()) return null;
+  if (!url || !url.trim()) return null
 
-  // Patrones para detectar diferentes tipos de URLs
+  url = url.trim()
+
+  const coordPattern = /(-?\d+\.?\d*)\s*,\s*(-?\d+\.?\d*)/
+  const coordMatch = url.match(coordPattern)
+  if (coordMatch) {
+    const lat = parseFloat(coordMatch[1])
+    const lng = parseFloat(coordMatch[2])
+    if (isValidCoordinate(lat, lng)) {
+      return `${lat}, ${lng}`
+    }
+  }
+
   const patterns = [
-    /@(-?\d+\.\d+),(-?\d+\.\d+)/, // Para URLs como https://www.google.com/maps/@lat,long,...
-    /q=(-?\d+\.\d+),(-?\d+\.\d+)/, // Para URLs con parámetros de consulta q=lat,long
-    /!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/, // Para URLs estructuradas con !3d lat y !4d long
-    // Para el formato de URLs https://maps.app.goo.gl/...
-    /https:\/\/maps\.app\.goo\.gl\/([A-Za-z0-9\-_]+)/, // Detecta URLs como https://maps.app.goo.gl/LXfgHEiLxPs9hqM88
-  ];
+    /@(-?\d+\.?\d*),(-?\d+\.?\d*)/,
+    /q=(-?\d+\.?\d*),(-?\d+\.?\d*)/,
+    /!3d(-?\d+\.?\d*)!4d(-?\d+\.?\d*)/,
+  ]
 
   for (const pattern of patterns) {
-    const match = url.match(pattern);
+    const match = url.match(pattern)
     if (match) {
-      // Si es una URL como maps.app.goo.gl, extraemos la latitud y longitud
-      if (match[1] && match[2]) {
-        return `${match[1]}, ${match[2]}`;
+      const lat = parseFloat(match[1])
+      const lng = parseFloat(match[2])
+      if (isValidCoordinate(lat, lng)) {
+        return `${lat}, ${lng}`
       }
     }
   }
 
-  return null; // Si no se encuentra ningún patrón válido
+  return null
+}
+
+function isValidCoordinate(lat: number, lng: number): boolean {
+  return lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180
 }
